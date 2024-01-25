@@ -72,7 +72,7 @@ After a final training with a 5-folds cross validation, our mean AUROC validatio
 ## Improvements
 
 Several improvements are possible for our work, the most important being the extraction of more features, which will largely improve the performances. 
-It can also be interesting to implement the ideas proposed in the paper MS-CLAM: Mixed Supervision for the classification and localization of tumors in Whole Slide Images (Paul Tourniaire, Marius Ilie, Paul Hofman, Nicholas Ayache, Hervé Delingette.), which suggest, amongst other things, a mixed supervision by fine-tuning the feature extractor. They manage to obtain fair improvements on CLAM's performances. 
+It can also be interesting to implement the ideas proposed in the paper MS-CLAM: Mixed Supervision for the classification and localization of tumors in Whole Slide Images (Paul Tourniaire, Marius Ilie, Paul Hofman, Nicholas Ayache, Hervé Delingette.), which suggests, amongst other things, a mixed supervision by fine-tuning the feature extractor. They manage to obtain fair improvements on CLAM's performances. 
 Finally, it would be good to do a qualitative evaluation by aligning the attention scores with a given WSI's thumbnail to be able to see on what the model is concentrating (lack of time).
 
 ## Conclusion
