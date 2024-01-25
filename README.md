@@ -24,7 +24,7 @@ The chosen model is [CLAM](https://github.com/mahmoodlab/CLAM), from the paper "
 This first step is common to most works on WSI in the literature. The goal is to obtain the tissue part of the image, because most of the WSI is composed of empty glass. We must also divide the slide into uniform patches to be able to process it. Here, we use the pipeline provided by the authors directly (binary thresholding with otsu mixed with opencv functions for the segmentation, and the openslide library to extract patches at given coordinates).
 
 <p align="center">
-  <img src="/report_images/feature_extractions_eng.png" alt="Step2, feature extraction with a resnet-50" width="50%"/>
+  <img src="/report_images/feature_extractions_eng.png" alt="Step2, feature extraction with a resnet-50" width="80%"/>
   <br>
   <em>Step 2 - Feature extraction with a resnet-50 (the modifications are not represented).</em>
 </p>
@@ -34,7 +34,7 @@ The second step is a feature extraction from the patches of each slide using a r
 The third and final step is feeding the features to the CLAM model. The goal is, for each slide, to extract attention scores from the features by passing them through an attention layer. Once this is done, there are 2 operations done with simple classifiers :
 
 <p align="center">
-  <img src="/report_images/clam_losses.png" alt="The CLAM model operations" width="50%"/>
+  <img src="/report_images/clam_losses.png" alt="The CLAM model operations" width="70%"/>
   <br>
   <em>Step 3 - After the attention scores computation, we compute both losses.</em>
 </p>
@@ -48,7 +48,7 @@ Our datasets are composed of 100 slides for training (80% training, 20% validati
 The principal metric used is AUROC. Our training is done on 50 epochs, using early stopping with a patience of 5 epochs. We keep the model from the epoch with the lowest validation loss.
 
 <p align="center">
-  <img src="/report_images/final_loss.png" alt="Our final bag losses" width = "40%"/>
+  <img src="/report_images/final_loss.png" alt="Our final bag losses" width = "50%"/>
   <br>
   <em>Our final loss</em>
 </p>
@@ -56,13 +56,13 @@ The principal metric used is AUROC. Our training is done on 50 epochs, using ear
 After an iterating process, we end up with a learning rate of 0.0002, dropouts of 0.25 and weight decay of 1e-5 (back to the author's parameters). We tried several other options, like momentum or other regularization techniques like class weights (at the end of the day, we still classify instances, so even in tumor slides, most of the tissue is still not cancerous) without significant results. The reason is that the model is highly dependant of the amount of data it receives :
 
 <p align="center">
-  <img src="/report_images/data_comparison1.png" alt="The model's performances depending on the number of WSIs - example 1" width = 80%/>
+  <img src="/report_images/data_comparison1.png" alt="The model's performances depending on the number of WSIs - example 1" width = 100%/>
   <br>
   <em>On top, the performances on the test set. At the bottom, the number of WSIs it received at training</em>
 </p>
 You can see that when we were limited to 30 slides, the loss was constant and the model wasn't learning anything. The performances were worse than a random. But when it is fed more data, the model starts little by little to become better than a random : the ROC curves gets further and further away from the linear curve at the center. We end up with an AUROC of 0.72 for our best model with 100 WSIs, and 0.9 when we use the author's weights from a model trained on 899 WSIs.
 <p align="center">
-  <img src="/report_images/authors_weights.png" alt="The model's performances depending on the number of WSIs 2 - example 2" width = 60%/>
+  <img src="/report_images/authors_weights.png" alt="The model's performances depending on the number of WSIs 2 - example 2" width = 80%/>
   <br>
   <em>On the left, our best model's performances, on the right, our performances with the author's weights</em>
 </p>
